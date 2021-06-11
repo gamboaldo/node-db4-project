@@ -5,8 +5,8 @@ server.use(express.json());
 const helmet = require("helmet");
 server.use(helmet());
 
-const router = require("./recipes/recipes-router");
-server.use("/api/recipes", router);
+const recRouter = require("./recipes/recipes-router");
+server.use("/api/recipes", recRouter);
 
 // server.use((err, req, res, next) => {
 //   // eslint-disable-line
@@ -15,5 +15,8 @@ server.use("/api/recipes", router);
 //     stack: err.stack,
 //   });
 // });
+server.use("*", (req, res) => {
+  res.json({ api: "up" });
+});
 
 module.exports = server;
