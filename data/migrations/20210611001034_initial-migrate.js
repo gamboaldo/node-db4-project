@@ -8,6 +8,7 @@ exports.up = function (knex) {
     .createTable("ingredients", (tbl) => {
       tbl.increments("ingredient_id");
       tbl.string("ingredient_name").notNullable().unique();
+      tbl.string("ingredient_unit", 50);
     })
     .createTable("steps", (tbl) => {
       tbl.increments("step_id");

@@ -3,6 +3,10 @@ const Recipe = require("./recipes-model");
 
 // const { checkRecipeId } = require("./recipes-middleware");
 
+router.get("/", (req, res) => {
+  res.status(200).json({ message: "hello" });
+});
+
 router.get("/:recipe_id", (req, res, next) => {
   Recipe.getById(req.params.recipe_id)
     .then((resource) => {
