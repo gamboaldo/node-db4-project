@@ -1,4 +1,4 @@
-const db = require("../data/db-config");
+const db = require("../../data/db-config");
 
 const checkRecipeId = async (req, res, next) => {
   const { recipe_id } = req.params;

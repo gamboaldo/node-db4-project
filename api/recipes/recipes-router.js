@@ -1,25 +1,23 @@
 const router = require("express").Router();
+const { checkRecipeId } = require("./recipes-middleware");
 const Recipe = require("./recipes-model");
 
-// const { checkRecipeId } = require("./recipes-middleware");
+router.get("/:recipe_id", checkRecipeId, async (req, res, next) => {
+  const { recipe_id } = req.params;
 
-router.get("/", (req, res) => {
-  res.status(200).json({ message: "hello" });
-});
-
-router.get("/:recipe_id", (req, res, next) => {
-  Recipe.getById(req.params.recipe_id)
-    .then((resource) => {
-      res.status(200).json(resource);
-    })
-    .catch(next);
+  try {
+    const recipe = await Recipe.getById(recipe_id);
+    res.json(recipe);
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.use((err, req, res) => {
   res.status(500).json({
-    customMessage: "something went wrong in the recipes router",
-    message: err.message,
+    error: err.message,
     stack: err.stack,
   });
 });
+
 module.exports = router;

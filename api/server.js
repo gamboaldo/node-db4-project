@@ -1,22 +1,12 @@
 const express = require("express");
+const helmet = require("helmet");
+const recipesRouter = require("./recipes/recipes-router");
+
 const server = express();
+
+server.use(helmet());
 server.use(express.json());
 
-const helmet = require("helmet");
-server.use(helmet());
-
-const recRouter = require("./recipes/recipes-router");
-server.use("/api/recipes", recRouter);
-
-// server.use((err, req, res, next) => {
-//   // eslint-disable-line
-//   res.status(500).json({
-//     message: err.message,
-//     stack: err.stack,
-//   });
-// });
-server.use("*", (req, res) => {
-  res.json({ api: "up" });
-});
+server.use("/api/recipes", recipesRouter);
 
 module.exports = server;
